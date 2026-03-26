@@ -1137,14 +1137,14 @@ async function initApp(user){
   currentUser = user;
   const {data:profile} = await sb.from('profiles').select('*').eq('id', user.id).single();
   if(!profile || !profile.username){ showProfileSetup(user); return; }
-  currentProfile = profile;
+ currentProfile = profile;
   const variant = AV_VARIANTS.find(function(v){ return v.id === profile.avatar; }) || AV_VARIANTS[0];
-  $('navName').textContent = profile.username;
-  const navImg = $('navUserImg'); navImg.src = EDGAR_IMG; navImg.style.filter = variant.filter;
-  const avImg = $('profileAvImg'); avImg.src = EDGAR_IMG; avImg.style.filter = variant.filter;
-  $('profileNameBig').textContent = profile.username;
-  $('profileEmailBig').textContent = user.email;
-  $('editName').value = profile.username;
+  const nameEl = $('navName'); if(nameEl) nameEl.textContent = profile.username;
+  const navImg = $('navUserImg'); if(navImg){ navImg.src = EDGAR_IMG; navImg.style.filter = variant.filter; }
+  const avImg = $('profileAvImg'); if(avImg){ avImg.src = EDGAR_IMG; avImg.style.filter = variant.filter; }
+  const nameBig = $('profileNameBig'); if(nameBig) nameBig.textContent = profile.username;
+  const emailBig = $('profileEmailBig'); if(emailBig) emailBig.textContent = user.email;
+  const editNameEl = $('editName'); if(editNameEl) editNameEl.value = profile.username;
   buildAvatarGrid('editAvatarGrid', profile.avatar || 'original');
   setScreen('appScreen');
   initSearch();
