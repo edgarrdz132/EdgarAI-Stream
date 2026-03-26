@@ -1825,16 +1825,16 @@ function loadEmbed(url){
 
 // ═══ FUENTES DE EMBED ═══
 const EMBED_SOURCES_MOVIE = [
-  function(id){ return 'https://vidsrc.to/embed/movie/'+id; },
-  function(id){ return 'https://vidsrc.me/embed/movie?tmdb='+id; },
-  function(id){ return 'https://www.2embed.cc/embed/'+id; },
-  function(id){ return 'https://embedder.net/e/movie?tmdb='+id; },
+  function(id){ return 'https://vidsrc.xyz/embed/movie?tmdb='+id; },
+  function(id){ return 'https://multiembed.mov/?video_id='+id+'&tmdb=1'; },
+  function(id){ return 'https://embed.smashystream.com/playere.php?tmdb='+id; },
+  function(id){ return 'https://www.2embed.review/embed/'+id; },
 ];
 const EMBED_SOURCES_TV = [
-  function(id,s,e){ return 'https://vidsrc.to/embed/tv/'+id+'/'+s+'/'+e; },
-  function(id,s,e){ return 'https://vidsrc.me/embed/tv?tmdb='+id+'&season='+s+'&episode='+e; },
-  function(id,s,e){ return 'https://www.2embed.cc/embedtv/'+id+'&s='+s+'&e='+e; },
-  function(id,s,e){ return 'https://embedder.net/e/series?tmdb='+id+'&sea='+s+'&epi='+e; },
+  function(id,s,e){ return 'https://vidsrc.xyz/embed/tv?tmdb='+id+'&season='+s+'&episode='+e; },
+  function(id,s,e){ return 'https://multiembed.mov/?video_id='+id+'&tmdb=1&s='+s+'&e='+e; },
+  function(id,s,e){ return 'https://embed.smashystream.com/playere.php?tmdb='+id+'&season='+s+'&episode='+e; },
+  function(id,s,e){ return 'https://www.2embed.review/embedtv/'+id+'&s='+s+'&e='+e; },
 ];
 
 // ═══ EMBED CON FALLBACK MEJORADO (FIX PRINCIPAL) ═══
