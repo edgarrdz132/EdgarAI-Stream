@@ -951,19 +951,25 @@ const SPIDER_JSON_DATA = [{"name":"Solo Eventos","logo":"https://www.tvporintern
 async function loadSpiderChannels(){
   try{
     const data = SPIDER_JSON_DATA;
-    SPIDER_CH = data
-      .filter(function(c){ return c.players && c.players.length > 0; })
-      .map(function(c){
-        return {
-          name: c.name,
-          prog: detectGroup(c.name),
-          group: detectGroup(c.name),
-          icon: c.logo ? '' : detectIcon(c.name),
-          logo: c.logo || '',
-          players: c.players,
-          progress: Math.floor(Math.random()*60)+30
-        };
-      });
+    // DESPUÉS
+SPIDER_CH = data
+  .filter(function(c){ return c.players && c.players.length > 0; })
+  .map(function(c){
+    // Normalizar logo: si es ruta relativa, agregarle la URL base
+    var logo = c.logo || '';
+    if(logo && !logo.startsWith('http')){
+      logo = 'https://www.tvporinternet2.com/' + logo;
+    }
+    return {
+      name: c.name,
+      prog: detectGroup(c.name),
+      group: detectGroup(c.name),
+      icon: logo ? '' : detectIcon(c.name),
+      logo: logo,
+      players: c.players,
+      progress: Math.floor(Math.random()*60)+30
+    };
+  });
     console.log('\u2705 Spider: '+SPIDER_CH.length+' canales cargados');
     toast('\ud83d\udce1 '+SPIDER_CH.length+' canales cargados','ok');
   }catch(e){
