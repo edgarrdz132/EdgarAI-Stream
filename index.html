@@ -631,7 +631,8 @@ footer{border-top:1px solid rgba(255,255,255,.05);padding:1.75rem 2.5rem;display
           <option value="de">Alemán</option>
           <option value="off">Sin subtítulos</option>
         </select>
-        <span style="font-size:.68rem;color:var(--muted2);font-family:'Share Tech Mono',monospace;">(depende de disponibilidad)</span>
+        <!-- CORRECCIÓN: texto actualizado para indicar que los subs se controlan dentro del player -->
+        <span style="font-size:.65rem;color:var(--muted2);font-family:'Share Tech Mono',monospace;">Actívalos con el ícono CC dentro del reproductor</span>
       </div>
       <div id="sourceSwitcher" style="display:none;margin-bottom:.75rem;">
         <div style="font-size:.65rem;color:var(--muted2);font-family:'Share Tech Mono',monospace;letter-spacing:1px;margin-bottom:.4rem;">🔀 CAMBIAR FUENTE</div>
@@ -652,7 +653,7 @@ footer{border-top:1px solid rgba(255,255,255,.05);padding:1.75rem 2.5rem;display
 // ═══ CONFIG ═══
 const EDGAR_IMG = 'https://jelxossqzywochqsszsq.supabase.co/storage/v1/object/public/assets/edgarai.jpg';
 const SUPABASE_URL = 'https://jelxossqzywochqsszsq.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImplbHhvc3Nxenl3b2NocXNzenNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5ODc4NDIsImV4cCI6MjA4OTU2Mzg0Mn0.7aPdziXzWjfO6WsMNFnX0k8hOCHZKr1SchhsEwdZ6tM'; // ← pon tu anon key real
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.YOUR_ANON_KEY_HERE';
 const TMDB_KEY = '8265bd1679663a7ea12ac168da84d2e8';
 const TMDB_BASE = 'https://api.themoviedb.org/3';
 const IMG_W = 'https://image.tmdb.org/t/p/w500';
@@ -808,7 +809,6 @@ document.addEventListener('DOMContentLoaded', function(){
   $('userBtn').addEventListener('click', function(){ $('userDD').classList.toggle('open'); });
   $('brandBtn').addEventListener('click', function(){ showPage('inicio'); });
 
-  // Subtítulos — actualiza idioma y recarga fuente
   $('subtitleLang').addEventListener('change', function(){
     currentSubLang = this.value === 'off' ? 'es' : this.value;
     if(this.value === 'off'){
@@ -821,17 +821,14 @@ document.addEventListener('DOMContentLoaded', function(){
     }
   });
 
-  // Hamburger
   function openMobileMenu(){ $('mobileMenu').classList.add('open');$('mobileOverlay').classList.add('open');$('hamburger').classList.add('open');document.body.style.overflow='hidden'; }
   function closeMobileMenu(){ $('mobileMenu').classList.remove('open');$('mobileOverlay').classList.remove('open');$('hamburger').classList.remove('open');document.body.style.overflow=''; }
   $('hamburger').addEventListener('click', function(){ $('mobileMenu').classList.contains('open')?closeMobileMenu():openMobileMenu(); });
   $('mobileOverlay').addEventListener('click', closeMobileMenu);
 
-  // ✅ FIX: Nav links desktop
   document.querySelectorAll('.nav-links a[data-page]').forEach(function(a){
     a.addEventListener('click', function(){ showPage(this.dataset.page); });
   });
-
   document.querySelectorAll('.mobile-nav-links a[data-page]').forEach(function(a){
     a.addEventListener('click', function(){ showPage(this.dataset.page); closeMobileMenu(); });
   });
@@ -846,7 +843,6 @@ document.addEventListener('DOMContentLoaded', function(){
     el.addEventListener('click', function(){ showPage(this.dataset.page); $('userDD').classList.remove('open'); });
   });
 
-  // Tabs películas
   document.querySelectorAll('#movieTabs .tab').forEach(function(btn){
     btn.addEventListener('click', function(){
       document.querySelectorAll('#movieTabs .tab').forEach(function(t){t.classList.remove('active');});
@@ -894,7 +890,6 @@ document.addEventListener('DOMContentLoaded', function(){
   document.addEventListener('click', function(e){ if($('userMenu')&&!$('userMenu').contains(e.target)) $('userDD').classList.remove('open'); });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
 
-  // Auth check
   (async function(){
     if(!sb){ enterAsGuest(); return; }
     try{
@@ -1334,10 +1329,12 @@ function initPlayer(src,fallbackEmbed){
     video.addEventListener('error',function(){if(fallbackEmbed) loadEmbed(fallbackEmbed);});
   }
 }
+
+// ═══ CORRECCIÓN PRINCIPAL: se eliminó el atributo sandbox del iframe ═══
 function loadEmbed(url){
   currentPlayer=null;
   const pc=$('playerContainer');if(!pc) return;
-  pc.innerHTML='<iframe src="'+url+'" style="width:100%;height:100%;min-height:300px;border:none;background:#000;display:block;" allowfullscreen allow="autoplay; encrypted-media; fullscreen; picture-in-picture; web-share" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation"></iframe>';
+  pc.innerHTML='<iframe src="'+url+'" style="width:100%;height:100%;min-height:300px;border:none;background:#000;display:block;" allowfullscreen allow="autoplay; encrypted-media; fullscreen; picture-in-picture; web-share" referrerpolicy="no-referrer"></iframe>';
 }
 
 // ═══ FUENTES ═══
